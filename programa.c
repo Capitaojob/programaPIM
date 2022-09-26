@@ -1,50 +1,71 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include <windows.h>
 
 //Definição do alfabeto e da criptografia a ser usada, respectivamente
 #define ALPH "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define NUMB "0123456789"
+
 #define AKHD "zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA"
+#define CNUM "9876543210"
 //--------------------------------------------------------------------
 
 //Função de processamento de texto que será usada durante o código
 void textProcess(char text[], int N, int x) {
 
-	for (int i = 0; i <= N; i++) {
+	for (int i = 0; i < strlen(text); i++) {
 
+        //!testar essa parte!//
 	    if (text[i] == '\0' && text[i+1] == '\0' && text[i+2] == '\0') {
 
 	    break;
 
-	}
+        }
 
-        for (int j = 0; j < 62; j++) {
-
-        	if (text[i] == AKHD[j]) {
-
-                if (j + x > 25 && isupper(ALPH[j]) == 0) {
-                    j -= 26;
+        if (isdigit(text[i])) {
+            for (int j = 0; j < 10; j++) {
+                if (text[i] == CNUM[j]) {
+                    if (j + x > 9) {
+                        j -= 10;
+                    }
+                    text[i] = NUMB[j+x];
+                    break;
                 }
+            }
+        }
 
-                else if (j + x > 51 && isupper(ALPH[j]) == 1) {
-                    j -= 26;
+        else {
+
+            for (int j = 0; j < 52; j++) {
+
+                if (text[i] == AKHD[j]) {
+
+                    if (j + x > 25 && isupper(ALPH[j]) == 0) {
+                        j -= 26;
+                    }
+
+                    else if (j + x > 51 && isupper(ALPH[j]) == 1) {
+                        j -= 26;
+                    }
+
+                    else if (j + x < 0 && isupper(ALPH[j]) == 0) {
+                        j += 26;
+                    }
+
+                    else if (j + x < 26 && isupper(ALPH[j]) == 1) {
+                        j += 26;
+                    }
+
+                    text[i] = ALPH[j+x];
+                    break;
+
                 }
-
-                else if (j + x < 0 && isupper(ALPH[j]) == 0) {
-                    j += 26;
-                }
-
-                else if (j + x < 26 && isupper(ALPH[j]) == 1) {
-                    j += 26;
-                }
-
-        		text[i] = ALPH[j+x];
-        		break;
-
-        	}
-
-		}
-
+            }
+        }
     }
 }
 //----------------------------------------------------------------
@@ -131,14 +152,14 @@ int main (void) {
 
 
     //Apresentação do programa e questionamento sobre o que o usuário pretende fazer
-	printf("\nOla %s, seja bem vindo ao codificador/decodificador de Akhdesh!\n", nome);
+	printf("\nOla %s, seja bem vindo ao codificador/decodificador de CAPS!\n", nome);
 	printf("O que deseja fazer?\nEncode (E)\nDecode (D)\nEncode/Decode Text (T)\nInfo (I)\nSair (S)\n");
 	scanf("%s", &resposta);
     //------------------------------------------------------------------------------
 
 
     //O loop while checa se a resposta bate com as pré-definidas e, caso não, pede para o usuário escrever novamente a resposta
-	while (resposta != 'S' && resposta != 'E' && resposta != 'D' && resposta != 's' && resposta != 'e' && resposta != 'd' && resposta != 'T' && resposta != 't') {
+	while (resposta != 'S' && resposta != 'E' && resposta != 'D' && resposta != 's' && resposta != 'e' && resposta != 'd' && resposta != 'T' && resposta != 't' && resposta != 'I' && resposta != 'i') {
 
         printf("Resposta invalida, digite novamente a resposta!\n");
         scanf("%s", &resposta);
@@ -178,20 +199,14 @@ int main (void) {
         }
         /*if (resposta == 'E' || resposta == 'e' || resposta == 'D' || resposta == 'd') {
             int N;
-
             printf("O texto a ser digitado tem quantos caracteres?\n");
             scanf("%d", &N);
-
             char text[N+1];
-
             printf("Otimo! Agora, digite o texto a ser criptografado/descriptografado:\n");
-
             fflush(stdin);
             fgets(text, N+1, stdin);
-
             //Inclusive, nesta parte da seção, define a chave de criptografia. Note que a mesma é simétrica, ou seja, é usada nas duas pontas (criptografar e descriptografar)
             printf("Para finalizar, qual eh a chave para encriptar?\nNote que a chave deve ser maior ou igual a 0 e menor ou igual a 26\n");
-
             int x;
             scanf("%d", &x);
         }*/
@@ -201,28 +216,28 @@ int main (void) {
         //O if / else if nesta seção reconhece se o usuário quer criptografar ou descriptografar um texto e,
         //de acordo com o que for certo, chama as funções e escreve o resultado na tela
         /*if (resposta == 'E' || resposta == 'e') {
-
             //Aqui está a função criada no começo do código (Linha 11)
 		    textProcess(text, N, x);
-
         	printf("O texto digitado traduzido para Akhdesh eh: \n");
         	puts(text);
         }
-
         else if (resposta == 'D' || resposta == 'd') {
-
             //Novamente, aqui está a função criada no começo do código (Linha 11)
             textProcess(text, N, x);
-
         	printf("O texto digitado traduzido para Akhdesh eh: \n");
         	puts(text);
-
         }*/
 
         else if (resposta == 'T' || resposta == 't') {
             fileProcess();
         }
         //---------------------------------------------------------------------------------------------------
+
+        //Nesta extensão do if, o programa reconhecerá se o usuário quer informações sobre o software
+        else if (resposta == 'I' || resposta == 'i') {
+            puts("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a facilisis tortor. Aliquam eget neque non mi eleifend vestibulum. Mauris feugiat enim posuere nisl eleifend cursus. Vivamus facilisis, mi varius bibendum eleifend, metus lorem maximus eros, nec eleifend neque sem ac justo. Maecenas fermentum sodales nisl, vel posuere ligula ornare non. Donec eu blandit sem. Praesent dictum scelerisque accumsan. Ut vehicula mollis nisl, id mattis tortor mattis et.");
+        }
+        //-------------------------------------------------------------------------------------------
 
 
         //Finalmente, o código pergunta novamente ao usuário o que ele deseja fazer, retornando ao while definido
@@ -235,7 +250,7 @@ int main (void) {
 
 
         //Este while não deixa que a resposta seja inválida novamente
-        while (resposta != 'S' && resposta != 'E' && resposta != 'D' && resposta != 's' && resposta != 'e' && resposta != 'd' && resposta != 'T' && resposta != 't') {
+        while (resposta != 'S' && resposta != 'E' && resposta != 'D' && resposta != 's' && resposta != 'e' && resposta != 'd' && resposta != 'T' && resposta != 't' && resposta != 'I' && resposta != 'i') {
 
 	        printf("Resposta invalida, digite novamente a resposta!\n");
 	        scanf("%s", &resposta);
