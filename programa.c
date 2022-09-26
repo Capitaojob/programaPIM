@@ -20,16 +20,16 @@ void textProcess(char text[], int N, int x) {
 	for (int i = 0; i < strlen(text); i++) {
 
         //!testar essa parte!//
-	    if (text[i] == '\0' && text[i+1] == '\0' && text[i+2] == '\0') {
+	    /*if (text[i] == '\0' && text[i+1] == '\0' && text[i+2] == '\0') {
 
 	    break;
 
-        }
+        }*/
 
         if (isdigit(text[i])) {
             for (int j = 0; j < 10; j++) {
                 if (text[i] == CNUM[j]) {
-                    if (j + x > 9) {
+                    while (j + x > 9) {
                         j -= 10;
                     }
                     text[i] = NUMB[j+x];
@@ -90,38 +90,46 @@ void fileProcess () {
     char ch;
     while ((ch = fgetc(fp)) != EOF) {
 
-        /*for (int j = 0; j < 52; j++) {
-            if (ch == AKHD[j]) {
-                ch = ALPH[j];
-                break;
+        if (isdigit(ch)) {
+            for (int j = 0; j < 10; j++) {
+                if (ch == CNUM[j]) {
+                    while (j + x > 9) {
+                        j -= 10;
+                    }
+                    ch = NUMB[j+x];
+                    break;
+                }
             }
-        }*/
+        }
 
-        for (int j = 0; j < 62; j++) {
+        else {
 
-            if (ch == AKHD[j]) {
+            for (int j = 0; j < 62; j++) {
 
-                if (j + x > 25 && isupper(ALPH[j]) == 0) {
-                    j -= 26;
+                if (ch == AKHD[j]) {
+
+                    if (j + x > 25 && isupper(ALPH[j]) == 0) {
+                        j -= 26;
+                    }
+
+                    else if (j + x > 51 && isupper(ALPH[j]) == 1) {
+                        j -= 26;
+                    }
+
+                    else if (j + x < 0 && isupper(ALPH[j]) == 0) {
+                        j += 26;
+                    }
+
+                    else if (j + x < 26 && isupper(ALPH[j]) == 1) {
+                        j += 26;
+                    }
+
+                    ch = ALPH[j+x];
+                    break;
+
                 }
-
-                else if (j + x > 51 && isupper(ALPH[j]) == 1) {
-                    j -= 26;
-                }
-
-                else if (j + x < 0 && isupper(ALPH[j]) == 0) {
-                    j += 26;
-                }
-
-                else if (j + x < 26 && isupper(ALPH[j]) == 1) {
-                    j += 26;
-                }
-
-                ch = ALPH[j+x];
-                break;
 
             }
-
         }
 
         putchar(ch);
@@ -197,37 +205,11 @@ int main (void) {
         	printf("O texto digitado traduzido para Akhdesh eh: \n");
         	puts(text);
         }
-        /*if (resposta == 'E' || resposta == 'e' || resposta == 'D' || resposta == 'd') {
-            int N;
-            printf("O texto a ser digitado tem quantos caracteres?\n");
-            scanf("%d", &N);
-            char text[N+1];
-            printf("Otimo! Agora, digite o texto a ser criptografado/descriptografado:\n");
-            fflush(stdin);
-            fgets(text, N+1, stdin);
-            //Inclusive, nesta parte da seção, define a chave de criptografia. Note que a mesma é simétrica, ou seja, é usada nas duas pontas (criptografar e descriptografar)
-            printf("Para finalizar, qual eh a chave para encriptar?\nNote que a chave deve ser maior ou igual a 0 e menor ou igual a 26\n");
-            int x;
-            scanf("%d", &x);
-        }*/
         //---------------------------------------------------------------------------------------------------
 
 
         //O if / else if nesta seção reconhece se o usuário quer criptografar ou descriptografar um texto e,
         //de acordo com o que for certo, chama as funções e escreve o resultado na tela
-        /*if (resposta == 'E' || resposta == 'e') {
-            //Aqui está a função criada no começo do código (Linha 11)
-		    textProcess(text, N, x);
-        	printf("O texto digitado traduzido para Akhdesh eh: \n");
-        	puts(text);
-        }
-        else if (resposta == 'D' || resposta == 'd') {
-            //Novamente, aqui está a função criada no começo do código (Linha 11)
-            textProcess(text, N, x);
-        	printf("O texto digitado traduzido para Akhdesh eh: \n");
-        	puts(text);
-        }*/
-
         else if (resposta == 'T' || resposta == 't') {
             fileProcess();
         }
@@ -263,7 +245,7 @@ int main (void) {
 	}
 
     //Ao finalizar o código, o programa se despede e, após 2500ms, fecha.
-	printf("Obrigado por usar o tradutor de Akhdesh! Ate mais!\n");
+	printf("Obrigado por usar o tradutor de CAPS! Ate mais!\n");
 	Sleep(2500);
 
 	return 0;
