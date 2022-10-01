@@ -74,8 +74,13 @@ void textProcess(char text[], int N, int x) {
 void fileProcess () {
 
     int x;
-    printf("Qual eh a chave para encriptar?\nNote que a chave deve ser um inteiro entre 0 e 26\n");
+    printf("Qual eh a chave para encriptar?\nNote que a chave deve ser um inteiro entre 0 e 26: ");
     scanf("%d", &x);
+
+    while (x > 26 || x < 0) {
+        printf("\nErro: Numero digitado %s que %s\nDigite novamente a resposta: ", x < 1 ? "menor":"maior", x < 1 ? "0":"26");
+        scanf("%d", &x);
+    }
 
     FILE *fp = fopen("texto.txt", "r");
     FILE *fptr = fopen("traduzido.txt", "w");
@@ -150,24 +155,74 @@ int main (void) {
     system("COLOR 0F");
     //-----------------------------------------------------------------------------------------------
 
-	char nome[20];
+    system("title CAPS Cryptographer");
+
+    system("mode con: cols=81 lines=30");
+
+    puts("                                        @@                                      \n"
+         "                                     ,@@@@@@,                                   \n"
+         "                                   @@@      @@@                                 \n"
+         "                                 @@@          @@@                               \n"
+         "                               @@@             %@@                              \n"
+         "                             @@@                 @@@                            \n"
+         "                            @@@                    @@                           \n"
+         "                          ,@@                       @@@                         \n"
+         "                         @@@                         @@@                        \n"
+         "                        @@@                           @@@                       \n"
+         "                       (@@                             @@)                      \n"
+         "                       @@ @@@@@@@@@@@       @@@@@@@@@@@ @@                      \n"
+         "                      @@@@@         @@@@ @@@@         @@@@@                     \n"
+         "                      @@@              @@@              @@@                     \n"
+         "                      @@@               @               @@@                     \n"
+         "                      @@@                              @@@@                     \n"
+         "                      @@@@@                           @@@@@                     \n"
+         "                      @@@@@@@                       @@@ @@@                     \n"
+         "                       @@@ (@@@                   @@@  @@@                      \n"
+         "                        @@@   @@@@             @@@@   @@@                       \n"
+         "                          @@@,   @@@        @@@@   ,@@@                         \n"
+         "                             @@@@   @@@  @@@@   @@@@                            \n"
+         "                      @@%        '@@@@@@@@@@@@@@@'      %@@                     \n"
+         "         @@@         @@                @@                 @@         @@@        \n"
+         "       @@@          @@@@                                 @@@@         @@@       \n"
+         "         @@@            @@@@@@@@%               %@@@@@@@@            @@@        \n"
+         "           @@@@                   @@@@@@@@@@@@@                   @@@@          \n"
+         "               @@@@@@@                                     @@@@@@@              \n"
+         "                      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                     ");
+
+    Sleep(4000);
+    system("cls");
+
+    system("mode con: cols=114 lines=12");
+
+    puts("   ______     ___    _________     _        ______        _        ____   ____  _____  ______        _            \n"
+         " .' ___  |  .'   `. |  _   _  |   / \\      |_   _ `.     / \\      |_  _| |_  _||_   _||_   _ `.     / \\        \n"
+         "/ .'   \\_| /  .-.  \\|_/ | | \\_|  / _ \\       | | `. \\   / _ \\       \\ \\   / /    | |    | | `. \\   / _ \\\n"
+         "| |   ____ | |   | |    | |     / ___ \\      | |  | |  / ___ \\       \\ \\ / /     | |    | |  | |  / ___ \\    \n"
+         "\\ `.___]  |\\  `-'  /   _| |_  _/ /   \\ \\_   _| |_.' /_/ /   \\ \\_      \\ ' /     _| |_  _| |_.' /_/ /   \\ \\_\n"
+         " `._____.'  `.___.'   |_____||____| |____| |______.'|____| |____|      \\_/     |_____||______.'|____| |____|     \n"
+         "                                                                                                                  \n"
+         "                                         Tradutor de Criptografia CAPS                                            \n"
+         "                                                                                                                  \n"
+         "                                       Um software por Silicio de Hefesto                                         \n");
+
+    Sleep(3000);
+    system("cls");
+
 	char resposta;
 
-    //Pergunta-se o nome do usuário, seguido do input resposta deste, para uma melhor experiência
-	printf("Ola usuario! Para uma melhor experiencia, digite o seu primeiro nome: ");
-	scanf("%s", nome);
-    //-------------------------------------------------------------------------------------------
-
+	system("mode con: cols=58 lines=40");
 
     //Apresentação do programa e questionamento sobre o que o usuário pretende fazer
-	printf("\nOla %s, seja bem vindo ao codificador/decodificador de CAPS!\n", nome);
-	printf("O que deseja fazer?\nEncode (E)\nDecode (D)\nEncode/Decode Text (T)\nInfo (I)\nSair (S)\n");
+    menu:
+    printf("\t\t       ***MENU***");
+	printf("\n\nOla! Seja bem vindo ao codificador/decodificador de CAPS!\n");
+	printf("O que deseja fazer?\n\nCriptografar/Descriptografar (C)\nCriptografar/Descriptografar Arquivo de Texto (T)\nInformacoes (I)\nSair (S)\n");
 	scanf("%s", &resposta);
     //------------------------------------------------------------------------------
 
 
     //O loop while checa se a resposta bate com as pré-definidas e, caso não, pede para o usuário escrever novamente a resposta
-	while (resposta != 'S' && resposta != 'E' && resposta != 'D' && resposta != 's' && resposta != 'e' && resposta != 'd' && resposta != 'T' && resposta != 't' && resposta != 'I' && resposta != 'i') {
+	while (resposta != 'S' && resposta != 's' && resposta != 'C' && resposta != 'c' && resposta != 'T' && resposta != 't' && resposta != 'I' && resposta != 'i') {
 
         printf("Resposta invalida, digite novamente a resposta!\n");
         scanf("%s", &resposta);
@@ -175,13 +230,13 @@ int main (void) {
 	}
     //-------------------------------------------------------------------------------------------------------------------------
 
-	printf("\n");
+	system("cls");
 
     //Loop que repete enquanto a resposta for diferente de S, ou seja, sair do aplicativo
 	while (resposta != 'S' && resposta != 's') {
 
         //Esta seção define algumas perguntas a serem feitas quando o usuário deseja de/criptografar um texto
-        if (resposta == 'E' || resposta == 'e' || resposta == 'D' || resposta == 'd') {
+        if (resposta == 'C' || resposta == 'c') {
             int N;
 
             printf("O texto a ser digitado tem quantos caracteres?\n");
@@ -195,15 +250,33 @@ int main (void) {
             fgets(text, N+1, stdin);
 
             //Inclusive, nesta parte da seção, define a chave de criptografia. Note que a mesma é simétrica, ou seja, é usada nas duas pontas (criptografar e descriptografar)
-            printf("Para finalizar, qual eh a chave para encriptar?\nNote que a chave deve ser um inteiro entre 0 e 26\n");
+            printf("Para finalizar, qual eh a chave para encriptar?\nNote que a chave deve ser um inteiro entre 0 e 26: ");
 
             int x;
             scanf("%d", &x);
 
+            while (x > 26 || x < 0) {
+                printf("\nErro: Numero digitado %s que %s\nDigite novamente a resposta: ", x < 1 ? "menor":"maior", x < 1 ? "0":"26");
+                scanf("%d", &x);
+            }
+
             textProcess(text, N, x);
 
-        	printf("O texto digitado traduzido para Akhdesh eh: \n");
+        	printf("O texto digitado traduzido para CAPS eh: \n");
         	puts(text);
+
+        	printf("\nDeseja retornar ao menu (M) ou sair do programa (S)?\n");
+        	scanf("%s", &resposta);
+
+        	if (resposta == 'M' || resposta == 'm') {
+                system("cls");
+                goto menu;
+        	}
+
+        	else if (resposta == 'S' || resposta == 's') {
+                break;
+        	}
+
         }
         //---------------------------------------------------------------------------------------------------
 
@@ -212,20 +285,46 @@ int main (void) {
         //de acordo com o que for certo, chama as funções e escreve o resultado na tela
         else if (resposta == 'T' || resposta == 't') {
             fileProcess();
+
+            printf("\nDeseja retornar ao menu (M) ou sair do programa (S)?\n");
+        	scanf("%s", &resposta);
+
+        	if (resposta == 'M' || resposta == 'm') {
+                system("cls");
+                goto menu;
+        	}
+
+        	else if (resposta == 'S' || resposta == 's') {
+                break;
+        	}
         }
         //---------------------------------------------------------------------------------------------------
 
         //Nesta extensão do if, o programa reconhecerá se o usuário quer informações sobre o software
         else if (resposta == 'I' || resposta == 'i') {
-            puts("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a facilisis tortor. Aliquam eget neque non mi eleifend vestibulum. Mauris feugiat enim posuere nisl eleifend cursus. Vivamus facilisis, mi varius bibendum eleifend, metus lorem maximus eros, nec eleifend neque sem ac justo. Maecenas fermentum sodales nisl, vel posuere ligula ornare non. Donec eu blandit sem. Praesent dictum scelerisque accumsan. Ut vehicula mollis nisl, id mattis tortor mattis et.");
+            puts("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a facilisis tortor. Aliquam eget neque non mi eleifend vestibulum. Mauris feugiat enim posuere nisl eleifend cursus. Vivamus facilisis, mi varius bibendum eleifend, metus lorem maximus eros, nec eleifend neque sem ac justo. Maecenas fermentum sodales nisl, vel posuere ligula ornare non. Donec eu blandit sem. Praesent dictum scelerisque accumsan. Ut vehicula mollis nisl, id mattis tortor mattis et.\n");
+
+            printf("\nDeseja retornar ao menu (M) ou sair do programa (S)?\n");
+        	scanf("%s", &resposta);
+
+        	if (resposta == 'M' || resposta == 'm') {
+                system("cls");
+                goto menu;
+        	}
+
+        	else if (resposta == 'S' || resposta == 's') {
+                break;
+        	}
         }
         //-------------------------------------------------------------------------------------------
 
 
         //Finalmente, o código pergunta novamente ao usuário o que ele deseja fazer, retornando ao while definido
         //na linha 84 com o novo resultado para que possa ser novamente processado o requerimento.
-        printf("\n");
-        printf("O que deseja fazer agora %s?\nEncode (E)\nDecode (D)\nEncode/Decode Text (T)\nInfo (I)\nSair (S)\n", nome);
+
+        //!system("cls");
+
+        /*printf("\nO que deseja fazer agora?\nEncode (E)\nDecode (D)\nEncode/Decode Text (T)\nInfo (I)\nSair (S)\n");
         fflush(stdin);
         scanf("%s", &resposta);
         //-------------------------------------------------------------------------------------------------------
@@ -237,12 +336,14 @@ int main (void) {
 	        printf("Resposta invalida, digite novamente a resposta!\n");
 	        scanf("%s", &resposta);
 
-		}
+		}*/
         //--------------------------------------------------------------------------------------------
 
-        printf("\n");
+        system("cls");
 
 	}
+
+	system("cls");
 
     //Ao finalizar o código, o programa se despede e, após 2500ms, fecha.
 	printf("Obrigado por usar o tradutor de CAPS! Ate mais!\n");
