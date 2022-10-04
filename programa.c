@@ -239,6 +239,7 @@ int main (void) {
         if (resposta == 'C' || resposta == 'c') {
             int N;
 
+            cryptProcess:
             printf("O texto a ser digitado tem quantos caracteres?\n");
             scanf("%d", &N);
 
@@ -265,7 +266,7 @@ int main (void) {
         	printf("O texto digitado traduzido para CAPS eh: \n");
         	puts(text);
 
-        	printf("\nDeseja retornar ao menu (M) ou sair do programa (S)?\n");
+        	printf("\nDeseja: \nCriptografar outro texto(C) \nRetornar ao menu (M) \nSair do programa (S)?\n");
         	scanf("%s", &resposta);
 
         	if (resposta == 'M' || resposta == 'm') {
@@ -275,6 +276,11 @@ int main (void) {
 
         	else if (resposta == 'S' || resposta == 's') {
                 break;
+        	}
+
+        	else if (resposta == 'C' || resposta == 'c') {
+                printf("\n");
+                goto cryptProcess;
         	}
 
         }
