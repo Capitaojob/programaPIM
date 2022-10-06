@@ -71,7 +71,7 @@ void textProcess(char text[], int N, int x, char resposta) {
             if (isdigit(text[i])) {
                 for (int j = 0; j < 10; j++) {
                     if (text[i] == NUMB[j]) {
-                        while (j - x > 9) {
+                        while (j - x < 0) {
                             j += 10;
                         }
                         text[i] = CNUM[j-x];
