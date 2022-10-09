@@ -114,7 +114,11 @@ void textProcess(char text[], int N, int x, char resposta) {
 //-------------------------------------------------------------------------------
 
 //Função de processamento de arquivo de texto
-void fileProcess () {
+void fileProcess (char resposta) {
+
+    printf("O processo desejado eh de criptografia(C) ou descriptografia(D)? ");
+    fflush(stdin);
+    scanf("%c", &resposta);
 
     int x;
     printf("Qual eh a chave para encriptar?\nNote que a chave deve ser um inteiro entre 0 e 26: ");
@@ -138,46 +142,93 @@ void fileProcess () {
     char ch;
     while ((ch = fgetc(fp)) != EOF) {
 
-        if (isdigit(ch)) {
-            for (int j = 0; j < 10; j++) {
-                if (ch == CNUM[j]) {
-                    while (j + x > 9) {
-                        j -= 10;
+        if (resposta == 'C' || resposta == 'c') {
+
+                if (isdigit(ch)) {
+                    for (int j = 0; j < 10; j++) {
+                        if (ch == CNUM[j]) {
+                            while (j + x > 9) {
+                                j -= 10;
+                            }
+                            ch = NUMB[j+x];
+                            break;
+                        }
                     }
-                    ch = NUMB[j+x];
-                    break;
                 }
-            }
+
+                else {
+
+                    for (int j = 0; j < 52; j++) {
+
+                        if (ch == AKHD[j]) {
+
+                            if (j + x > 25 && isupper(ALPH[j]) == 0) {
+                                j -= 26;
+                            }
+
+                            else if (j + x > 51 && isupper(ALPH[j]) == 1) {
+                                j -= 26;
+                            }
+
+                            else if (j + x < 0 && isupper(ALPH[j]) == 0) {
+                                j += 26;
+                            }
+
+                            else if (j + x < 26 && isupper(ALPH[j]) == 1) {
+                                j += 26;
+                            }
+
+                            ch = ALPH[j+x];
+                            break;
+
+                        }
+                    }
+                }
+
         }
 
-        else {
+        else if (resposta == 'D' || resposta == 'd') {
 
-            for (int j = 0; j < 62; j++) {
-
-                if (ch == AKHD[j]) {
-
-                    if (j + x > 25 && isupper(ALPH[j]) == 0) {
-                        j -= 26;
+                if (isdigit(ch)) {
+                    for (int j = 0; j < 10; j++) {
+                        if (ch == NUMB[j]) {
+                            while (j - x < 0) {
+                                j += 10;
+                            }
+                            ch = CNUM[j-x];
+                            break;
+                        }
                     }
-
-                    else if (j + x > 51 && isupper(ALPH[j]) == 1) {
-                        j -= 26;
-                    }
-
-                    else if (j + x < 0 && isupper(ALPH[j]) == 0) {
-                        j += 26;
-                    }
-
-                    else if (j + x < 26 && isupper(ALPH[j]) == 1) {
-                        j += 26;
-                    }
-
-                    ch = ALPH[j+x];
-                    break;
-
                 }
 
-            }
+                else {
+
+                    for (int j = 0; j < 52; j++) {
+
+                        if (ch == ALPH[j]) {
+
+                            if (j - x > 25 && isupper(AKHD[j]) == 0) {
+                                j -= 26;
+                            }
+
+                            else if (j - x > 51 && isupper(AKHD[j]) == 1) {
+                                j -= 26;
+                            }
+
+                            else if (j - x < 0 && isupper(AKHD[j]) == 0) {
+                                j += 26;
+                            }
+
+                            else if (j - x < 26 && isupper(AKHD[j]) == 1) {
+                                j += 26;
+                            }
+
+                            ch = AKHD[j-x];
+                            break;
+
+                        }
+                    }
+                }
         }
 
         putchar(ch);
@@ -334,7 +385,7 @@ int main (void) {
 
         //Já neste segundo caso, a função chamada é a de processamento de arquivos de texto
         else if (resposta == 'T' || resposta == 't') {
-            fileProcess();
+            fileProcess(resposta);
 
             printf("\nDeseja retornar ao menu (M) ou sair do programa (S)?\n");
         	scanf("%s", &resposta);
