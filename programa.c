@@ -311,10 +311,9 @@ int main (void) {
 
 	char resposta;
 
-	system("mode con: cols=58 lines=40");
-
     //Apresentação do programa e questionamento sobre o que o usuário pretende fazer
     menu:
+    system("mode con: cols=58 lines=40");
     printf("\t\t       ***MENU***");
 	printf("\n\nOla! Seja bem vindo ao codificador/decodificador de CAPS!\n");
 	printf("O que deseja fazer?\n\nCriptografar (C)\nDescriptografar (D)\nCriptografar/Descriptografar Arquivo de Texto (T)\nInformacoes (I)\nSair (S)\n");
@@ -335,6 +334,7 @@ int main (void) {
 
     //Loop que repete enquanto a resposta for diferente de S, ou seja, sair do aplicativo
 	while (resposta != 'S' && resposta != 's') {
+            system("mode con: cols=80 lines=40");
     //-----------------------------------------------------------------------------------
 
         //Esta condicional e suas subordinadas definem que função será chamada de acordo com a resposta do usuário
@@ -342,12 +342,12 @@ int main (void) {
         if (resposta == 'C' || resposta == 'c' || resposta == 'D' || resposta == 'd') {
             int N;
 
-            printf("O texto a ser digitado tem quantos caracteres?\n");
+            printf("O texto a ser digitado tem, no minimo, quantos caracteres? \n");
             scanf("%d", &N);
 
             char text[N+1];
 
-            printf("Otimo! Agora, digite o texto a ser criptografado/descriptografado:\n");
+            printf("Otimo! Agora, digite o texto a ser %s:\n", resposta == 'C' || resposta == 'c' ? "criptografado" : "descriptografado");
 
             fflush(stdin);
             fgets(text, N+1, stdin);
@@ -403,7 +403,38 @@ int main (void) {
 
         //Nesta útlima extensão do if, o programa reconhecerá se o usuário quer informações sobre o software
         else if (resposta == 'I' || resposta == 'i') {
-            puts("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a facilisis tortor. Aliquam eget neque non mi eleifend vestibulum. Mauris feugiat enim posuere nisl eleifend cursus. Vivamus facilisis, mi varius bibendum eleifend, metus lorem maximus eros, nec eleifend neque sem ac justo. Maecenas fermentum sodales nisl, vel posuere ligula ornare non. Donec eu blandit sem. Praesent dictum scelerisque accumsan. Ut vehicula mollis nisl, id mattis tortor mattis et.\n");
+            system("mode con: cols=120 lines=72");
+            puts("O menu apresenta 5 funcoes a serem usadas: \n"
+                "(1) Criptografar (C)\n"
+                "(2) Descriptografar (D)\n"
+                "(3) Criptografar/Descriptografar Arquivo de Texto (T)\n"
+                "(4) Informacoes (I)\n"
+                "(5) Sair (S)\n"
+                "\n"
+                "Abaixo, segue a explicacao de como estas funcionam:\nNas explicacoes, um exemplo continuo sera utilizado\n"
+                "-------------------------------------------------------------------\n"
+                "\n"
+                "Funcao de Criptografia(C) e Descriptografia(D) - Ambas funcoes sao similares, porem, possuem resultados diferentes, sendo que voce somente precisara inserir 3 inputs para faze-las funcionar:\n"
+                "-Primeiro: Quantos caracteres o seu texto tem, no minimo. Pergunta utilizado para otimizar sua experiencia, espera que o usuario digite um numero que, em nosso exemplo,  sera '3'.\n"
+                "-Segundo: Qual o texto a ser criptografado ou descriptografado. Somente necessita que voce digite qual o texto a ser processado, por exemplo, 'H2O', que possui 3 caracteres. Caso o numero informado na primeira pergunta for menor que o texto, o software tera problemas de execucao.\n"
+                "-Terceiro: Qual sera a chave de criptografia. Esta tem como objetivo mudar a forma com que o texto sera embaralhado, podendo receber um numero digitado entre 0 e 26, sendo que cada numero utilizado dara um resultado diferente. Em nosso exemplo, utilizaremos o numero 5"
+                "Ao inserir os 3 inputs utilizados no exemplo, levando em conta que a funcao escolhida foi a de criptografia(C), o resultado mostrado sera 'T8Z', que eh a formula H2O (3 letras) criptografada em CAPS com a chave 5.\n"
+                "\n"
+                "Funcao de Criptografia/Descriptografia de arquivos de texto (T) - Esta funcao, assim como a anterior, realizara o processamento de um texto. Porem, esta usara um arquivo de texto.\n"
+                "Para que esta funcione de maneira correta, voce precisa garantir que o texto esteja localizado no arquivo 'texto.txt', na mesma pasta em que se encontra este software.\n"
+                "-Primeiro: O software pedira que voce informe se o processamento necessario eh de criptografia, indicado digitando a letra 'C', ou descriptografia, indicado digitando a letra 'D'\n"
+                "-Segundo: Da mesma forma que a funcao anterior, pede para que o usuario informe, por meio da digitacao de um numero entre 0 e 26, a chave que sera utilizada\n"
+                "Caso o arquivo de texto esteja no local correto, junto ao executavel do software, este realizara o processamento de todo o texto contido no arquivo 'texto.txt', imprimindo na tela o resultado do processamento e criando ou editando, na mesma pasta, um arquivo chamado 'traduzido.txt', que contem o resultado deste processamento\n"
+                "\n"
+                "Funcao de Informacoes(I) - Esta funcao, assim como voce pode ver, exibe um 'help' do software, contendo informacoes de como usar e do que acontece em cada funcao\n"
+                "\n"
+                "Ao final das funcoes explicadas ate aqui, inclusive a que esta sendo executada agora, serao exibidos a voce 2 alternativas do que fazer a seguir: \n"
+                "(S) Sair - Esta funcao fechara o programa. \n"
+                "Ou\n"
+                "(M) Voltar ao Menu Principal - Permitira que voce utilize outras funcionalidades, sem fechar o programa.\n"
+                "\n"
+                "Funcao Sair - Se desejar sair a qualquer momento, no fim dos procedimentos e no menu principal, sera exibida a opcao 'sair', executada ao digitar (S) ou (s). Esta encerrara o programa, acompanhada de uma mensagem de agradecimento por utilizar nossos servicos.\n\n"
+                "Duvidas? Entre em contato com o nosso suporte.\n\nTelefone: 16 99357-2303\nE-Mail: siliciodehefesto@gmail.com\n        gotadavida@gmail.com");
 
             printf("\nDeseja retornar ao menu (M) ou sair do programa (S)?\n");
         	scanf("%s", &resposta);
